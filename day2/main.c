@@ -87,7 +87,7 @@ void selection_sort_marks_desc(int n, struct student e[n]) {
     for (int i = 0; i < n - 1; i++) {
         int max_idx = i;
         for (int j = i + 1; j < n; j++) {
-            if (e[j].marks > e[max_idx].marks) {
+            if (e[j].marks > e[max_idx].marks) { // change this sign for asc or desc (>)
                 max_idx = j;
             }
         }
