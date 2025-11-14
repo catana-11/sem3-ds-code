@@ -241,7 +241,7 @@ void insert_bst(struct node *root)
 }
 
 // non-recursive search: returns pointer if found, else NULL-->
-struct node *search_bst_nonrec(struct node *root, const char word[20])
+struct node *search_nr(struct node *root, const char word[20])
 {
     struct node *temp = root;
     while (temp != NULL) {
@@ -259,6 +259,22 @@ struct node *search_bst_nonrec(struct node *root, const char word[20])
     return NULL;
 }
 
+int search_r(struct node *root, char str[20]){
+    struct node *temp = root;
+    int f = 0;
+
+    
+    if (temp!=NULL){
+
+        if (strcmp(temp->word, str) == 0){printf("\nNode found"); return 1;}
+
+        if (strcmp(str, temp->word) < 0) {f = search_r(temp->left, str);}
+        if (strcmp(str, temp->word) > 0) {f = search_r(temp->right, str);}
+        return f;
+    }
+}
+
+
 // inorder display  -->
 void inorder_rec(struct node *root)
 {
@@ -269,19 +285,6 @@ void inorder_rec(struct node *root)
     }
 }
 
-// copy of tree (recursive)-->
-struct node *copy_rec(struct node *root)
-{
-    struct node *temp = NULL;
-    if (root != NULL) {
-        temp = (struct node *)malloc(sizeof(struct node));
-        strcpy(temp->word, root->word);
-        strcpy(temp->meaning, root->meaning);
-        temp->left = copy_rec(root->left);
-        temp->right = copy_rec(root->right);
-    }
-    return temp;
-}
 
 int main()
 {
@@ -295,6 +298,12 @@ int main()
     scanf("%19s", root->meaning);
 
     create_bst_nonrec(root);
+
+    char str[20];
+    printf("\nEnter the rec string to search: "); scanf("%s", str);
+    int found = 0;
+    found = search_r(root, str);
+
 
     printf("\nInorder (BST) :\n");
     inorder_rec(root);
@@ -321,10 +330,7 @@ int main()
     levelwise(root);
     printf("\n");
 
-    printf("\nNow implementing copy:\n");
-    copy = copy_rec(root);
-    inorder_rec(copy);
-    printf("\n");
+
 
     printf("\nNow mirroring original tree (in-place):\n");
     mirror_rec(root);

@@ -129,7 +129,6 @@ void reverse_sll(struct node *head){
 void sort_sll(struct node *head){
 
     struct node *temp, *curr;
-
     curr = temp = head;
 
     int swapped = 1;
